@@ -85,12 +85,6 @@ class GIN(LightningModule):
 
         self.acc = Accuracy(out_channels)
 
-    def move_data(self, batch):
-        return batch.to(self.device)
-
-    def transfer_batch_to_device(self, batch: Any, device: torch.device):
-        return (batch[0].to(device), batch[1])
-
     def forward(self, x: Tensor, adj_t: SparseTensor, ptr: Tensor) -> Tensor:
         for conv in self.convs:
             x = conv(x, adj_t)
